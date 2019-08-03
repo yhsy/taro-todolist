@@ -54,6 +54,24 @@ export default class Index extends Component {
     })
   }
 
+  // 清空任务
+  handleClear = () =>{
+    // 显示loading
+    Taro.showLoading({
+      title: '清空数据中'
+    })
+    setTimeout(() => {
+      // 删除已完成的任务
+      const tlist = this.state.todos.filter( v => !v.done )
+      // 删除所有任务
+      // tlist.splice(0,tlist.length)
+      this.setState({
+        todos: tlist
+      })
+      Taro.hideLoading()
+    }, 2000);
+  }
+
   render () {
     return (
       <View className='index'>
@@ -79,6 +97,7 @@ export default class Index extends Component {
           })
         }
         </AtList>
+        <Button onClick={this.handleClear}>清空已完成任务</Button>
       </View>
     )
   }
